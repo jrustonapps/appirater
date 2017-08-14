@@ -203,6 +203,8 @@ extern NSString *const kAppiraterReminderRequestDate;
 
 @interface Appirater(Configuration)
 
++ (NSString *)appID;
+
 /*!
  Set your Apple generated software id here.
  */

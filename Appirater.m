@@ -97,6 +97,10 @@ static NSString *_affiliateCampaign = nil;
 
 @synthesize ratingAlert;
 
++ (NSString *)appID {
+    return _appId;
+}
+
 + (void) setAppId:(NSString *)appId {
     _appId = appId;
 }
