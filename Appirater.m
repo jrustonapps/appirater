@@ -307,6 +307,11 @@ static NSString *_affiliateCampaign = nil;
     }
     
     if (NSStringFromClass([SKStoreReviewController class]) != nil) {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:YES forKey:kAppiraterRatedCurrentVersion];
+        [userDefaults synchronize];
+        
         [SKStoreReviewController requestReview];
         return;
     }
