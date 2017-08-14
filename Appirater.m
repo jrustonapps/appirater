@@ -297,6 +297,15 @@ static NSString *_affiliateCampaign = nil;
   if(delegate && [delegate respondsToSelector:@selector(appiraterShouldDisplayAlert:)] && ![delegate appiraterShouldDisplayAlert:self]) {
       return;
   }
+    
+    if (delegate && [delegate respondsToSelector:@selector(appiraterDidDisplayAlert:)]) {
+        [delegate appiraterDidDisplayAlert:self];
+    }
+    
+    if (NSStringFromClass([SKStoreReviewController class]) != nil) {
+        [SKStoreReviewController requestReview];
+        return;
+    }
   
   if (displayRateLaterButton) {
   	alertView = [[UIAlertView alloc] initWithTitle:self.alertTitle
@@ -314,10 +323,6 @@ static NSString *_affiliateCampaign = nil;
 
 	self.ratingAlert = alertView;
     [alertView show];
-
-    if (delegate && [delegate respondsToSelector:@selector(appiraterDidDisplayAlert:)]) {
-             [delegate appiraterDidDisplayAlert:self];
-    }
 }
 
 - (void)showRatingAlert
@@ -645,11 +650,6 @@ static NSString *_affiliateCampaign = nil;
 
 	//Use the in-app StoreKit view if available (iOS 6) and imported. This works in the simulator.
 	if (![Appirater sharedInstance].openInAppStore && NSStringFromClass([SKStoreProductViewController class]) != nil) {
-        
-        if (NSStringFromClass([SKStoreReviewController class]) != nil) {
-            [SKStoreReviewController requestReview];
-            return;
-        }
 		
 		SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
 		NSNumber *appId = [NSNumber numberWithInteger:_appId.integerValue];
@@ -674,11 +674,6 @@ static NSString *_affiliateCampaign = nil;
 	
 	//Use the standard openUrl method if StoreKit is unavailable.
 	} else {
-        
-        if (NSStringFromClass([SKStoreReviewController class]) != nil) {
-            [SKStoreReviewController requestReview];
-            return;
-        }
 		
 		#if TARGET_IPHONE_SIMULATOR
 		NSLog(@"APPIRATER NOTE: iTunes App Store is not supported on the iOS simulator. Unable to open App Store page.");
